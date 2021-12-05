@@ -1,0 +1,551 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>智慧停送电管理平台</title>
+    <link rel="stylesheet" href="../css/layui.css">
+    <link rel="stylesheet" href="../css/iconfont.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/safemain.css">
+    <style>
+        .layui-body {
+            left: 0px;
+            top: 0px;
+            background: #eeeff4;
+            bottom: 0;
+        }
+        /*czmid是父级,垂直居中，子级不定高度*/
+        /*===========================================*/
+        .safe_timeline {
+            text-align: center;
+        }
+
+        .time-horizontal {
+            list-style-type: none;
+            border-top: 2px solid #ccc;
+            max-width: 800px;
+            padding: 0;
+            margin: 0;
+            display: inline-block;
+            * display: inline;
+            zoom: 1;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+            .time-horizontal li {
+                float: left;
+                position: relative;
+                text-align: center;
+                width: 25%;
+                padding-top: 10px;
+                color: #ccc;
+            }
+        /*.time-horizontal li b:before {position: absolute;top: -10px; left: 47%;width: 12px; height: 12px;border: 2px solid #ccc; border-radius: 8px; background: #fff;font-size: 12px; color: #ccc;}*/
+        .notPass:before {
+            content: '\f00d';
+            position: absolute;
+            top: -10px;
+            left: 47%;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #e44545;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 12px;
+            color: #e44545;
+        }
+
+        .notPass s {
+            position: absolute;
+            width: 100%;
+            display: block;
+            background: #e44545;
+            height: 2px;
+            top: -2px;
+            left: -50%;
+        }
+
+        .finishedB:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 47%;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 12px;
+            color: #ccc;
+        }
+        /* .time-horizontal s {display: none; }*/
+        .time-horizontal .finish {
+            color: #0292d9;
+        }
+
+            .time-horizontal .finish b:before {
+                border: none;
+                content: '\f058';
+                font-size: 19px;
+                z-index: 1;
+                color: #0292d9;
+            }
+
+            .time-horizontal .finish s {
+                position: absolute;
+                width: 100%;
+                display: block;
+                background: #0292d9;
+                height: 2px;
+                top: -2px;
+                left: -50%;
+            }
+
+            .time-horizontal .finish:first-child s {
+                width: 50%;
+                left: 0;
+            }
+
+            .time-horizontal .finish:last-child s {
+                width: 150%;
+            }
+    </style>
+</head>
+
+<body class="layui-layout-body safe ">
+
+    <div class="layui-body safe-body ">
+        <!-- 内容主体区域 -->
+        <div style="height: 100%;padding:68px 16px 20px;box-sizing: border-box">
+            <h1 class="safeh1 cbl2"><blockquote class="layui-elem-quote" id="head"></blockquote></h1>
+            <div class="layui-card safe-card1">
+                <div class="" style="height: 100%;">
+                    <!--overflow: auto;-->
+                    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+
+                        <div class="layui-tab-content layui-card-body">
+                            <div class="layui-tab-item layui-show safe-item" style="padding-bottom: 25px">
+                                <form class="layui-form" action="">
+                                    <h2>基本信息</h2>
+                                    <div class="layui-form safe-form">
+                                        <table border="0" class="layui-table">
+                                            <tbody>
+                                                <tr>
+                                                    <th>申请人</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="Realname"></span>
+                                                        </div>
+                                                    </td>
+                                                    <th>申请单位</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="DepartmentName"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>变电柜名称</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="AHName"></span>
+                                                        </div>
+                                                    </td>
+                                                    <th>电压类型</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="VoltageType"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>作业状态</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="OperationFlow"></span>
+                                                        </div>
+                                                    </td>
+                                                    <th>审核状态</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="Aduit"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>开始时间</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="BeginDate"></span>
+                                                        </div>
+
+                                                    </td>
+                                                    <th>结束时间</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="EndDate"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>是否确认完成</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="IsConfirm"></span>
+                                                        </div>
+                                                    </td>
+                                                    <th>创建时间</th>
+                                                    <td>
+                                                        <div class="safe-grey">
+                                                            <span id="CreateDate"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>工作内容</th>
+                                                    <td colspan="3">
+                                                        <div class="safe-grey">
+                                                            <span id="WorkContent"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h2>申请单审核信息</h2>
+                                    <div class="layui-form safe-form">
+                                        <table border="0" class="layui-table">
+                                            <colgroup>
+                                                <col width="">
+                                                <col width="">
+                                                <col width="">
+                                                <col>
+                                            </colgroup>
+                                            <tbody id="tbody"></tbody>
+                                        </table>
+                                    </div>
+
+                                    <div id="workSheet">
+                                        <h2>工作票</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>停电影响范围</th>
+                                                        <td colspan="3">
+                                                            <div class="safe-grey">
+                                                                <textarea id="Influence" class="layui-textarea" name="Influence" disabled></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>技术安全措施</th>
+                                                        <td colspan="3">
+                                                            <div class="safe-grey">
+                                                                <textarea id="SafetyMeasures" class="layui-textarea" name="SafetyMeasures" disabled>1、将相关设备停电挂牌并验电；2、执行公司安全规程；3、执行登高作业的相关规定；&#10;4、执行起重作业的相关规定；5、执行烧焊的相关规定；6、作业完毕所有的防护均恢复后送电试车。</textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                        <h2>工作票审核信息</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <colgroup>
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col>
+                                                </colgroup>
+                                                <tbody id="workSheetAudit"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="stopDispatcherAudit">
+                                        <h2>停电调度审核</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <colgroup>
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col>
+                                                </colgroup>
+                                                <tbody id="stopDispatcherList"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="stopTaskUser">
+                                        <h2>停电电工</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <colgroup>
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col>
+                                                </colgroup>
+                                                <tbody id="stopElectricalTaskList"></tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="stopOperationSheet">
+                                        <h2>停电操作单</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>操作人</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="stopOperationUserName"></span>
+                                                            </div>
+                                                        </td>
+                                                        <th>操作时间</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="stopOperationDate"></span>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr id="stopOperationContent">
+                                                        <th>监护人</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="stopGuardianUserName"></span>
+                                                            </div>
+                                                        </td>
+                                                        <th>确认时间</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="stopFinishDate"></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <!--<tr>
+                        <th>操作内容</th>
+                        <td colspan="3">
+                            <div class="safe-grey">
+                                <textarea id="stopOperationContent" class="layui-textarea" name="stopOperationContent" disabled></textarea>
+                            </div>
+                        </td>
+                    </tr>-->
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--<div id="sendDispatcherAudit">
+        <h2>送电调度审核</h2>
+        <div class="layui-form safe-form">
+            <table border="0" class="layui-table">
+                <colgroup>
+                    <col width="">
+                    <col width="">
+                    <col width="">
+                    <col>
+                </colgroup>
+                <tbody id="sendDispatcherList"></tbody>
+            </table>
+        </div>
+    </div>-->
+                                    <div id="pickTaskUser">
+                                        <h2>摘牌电工</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <colgroup>
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col>
+                                                </colgroup>
+                                                <tbody id="pickElectricalTaskList"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="sendTaskUser">
+                                        <h2>送电电工</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <colgroup>
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col>
+                                                </colgroup>
+                                                <tbody id="sendElectricalTaskList"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="sendOperationSheet">
+                                        <h2>送电操作单</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>操作人</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="sendOperationUserName"></span>
+                                                            </div>
+                                                        </td>
+                                                        <th>操作时间</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="sendOperationDate"></span>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr id="sendOperationContent">
+                                                        <th>监护人</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="sendGuardianUserName"></span>
+                                                            </div>
+                                                        </td>
+                                                        <th>确认时间</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="sendFinishDate"></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <!--<tr>
+                        <th>操作内容</th>
+                        <td colspan="3">
+                            <div class="safe-grey">
+                                <textarea id="sendOperationContent" class="layui-textarea" name="sendOperationContent" disabled></textarea>
+                            </div>
+                        </td>
+                    </tr>-->
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="sendElectricalSheet">
+                                        <h2>送电联票</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>操作人</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="sendElectricalRealName"></span>
+                                                            </div>
+                                                        </td>
+                                                        <th>要求送电时间</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="sendElectricalDate"></span>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th>工作完成情况</th>
+                                                        <td colspan="3">
+                                                            <div class="safe-grey">
+                                                                <span id="WorkFinishContent"></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>人员是否全部撤离现场</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="IsEvacuateAllPeople"></span>
+                                                            </div>
+                                                        </td>
+                                                        <th>地线是否拆除</th>
+                                                        <td>
+                                                            <div class="safe-grey">
+                                                                <span id="IsRemoveGroundLine"></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="myAudit">
+                                        <h2>我的审核</h2>
+                                        <div class="layui-form safe-form">
+                                            <table border="0" class="layui-table">
+                                                <colgroup>
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col width="">
+                                                    <col>
+                                                </colgroup>
+                                                <tbody>
+                                                    <tr>
+                                                        <th><span>审批状态</span></th>
+                                                        <td colspan="7">
+                                                            <div class="safe-grey">
+                                                                <select id="AuditState">
+                                                                    <option value="3">通过</option>
+                                                                    <option value="4">驳回</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><span>审批事由</span></th>
+                                                        <td colspan="7">
+                                                            <div class="safe-grey">
+                                                                <textarea id="AuditDesc" placeholder="请输入审批事由" class="layui-textarea" name="desc">通过</textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <div class="safe-tijiao">
+                                    <input type="button" value="立即提交" onclick="tj()" class="layui-btn bbl1 sh">
+
+                                    <input type="button" value="申请单" onclick="exportApplicationSheet()" class="layui-btn edit applicationSheet">
+                                    <input type="button" value="工作票" onclick="exportWorkSheet()" class="layui-btn bian workSheet">
+                                    <input type="button" value="停电操作单" onclick="exportStopOperationSheet()" class="layui-btn kan stopOperationSheet">
+                                    <input type="button" value="送电操作单" onclick="exportSendOperationSheet()" class="layui-btn bbl3 sendOperationSheet">
+
+                                    <input type="button" value="返回" onclick="cancle()" class="layui-btn bred">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="../Scripts/jquery-3.3.1.min.js"></script>
+    <script src="../Scripts/layui.js"></script>
+    <script src="../Scripts/layer/layer.js"></script>
+    <script src="../Scripts/Common.js"></script>
+    <script src="../Scripts/safe.js"></script>
+    <script src="OperationDetail.js"></script>
+
+</body>
+</html>

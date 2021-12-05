@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>智慧停送电管理平台</title>
+    <link rel="stylesheet" href="/css/layui.css">
+    <link rel="stylesheet" href="/css/iconfont.css">
+    <link rel="stylesheet" href="/css/safemain.css">
+    <link rel="stylesheet" href="/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/file-explore.css">
+</head>
+
+<body class="layui-layout-body safe">
+    <div style="height: 100%;padding:68px 16px 20px;box-sizing: border-box">
+        <!--<h1 class="safeh1 cbl2" id="head">部门管理</h1>-->
+        <h1 class="safeh1 cbl2"><blockquote class="layui-elem-quote" id="head"></blockquote></h1>
+        <div class="layui-card safe-card1">
+            <div class="" style="height: 100%;overflow: auto;">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title layui-card-header">
+                        <li class="">基本信息</li>
+                    </ul>
+                    <div class="layui-tab-content layui-card-body">
+                        <div class="layui-tab-item layui-show fc safe-item1" style="">
+                            <!--					目录树-->
+                            <div class="container">
+                                <ul class="file-tree file-list"></ul>
+                            </div>
+                            <!--					文件-->
+                            <div class="safefile flt">
+                                <div class="layui-form safe-form" style="overflow-y: scroll">
+                                    <table border="0" class="layui-table">
+
+                                        <tbody>
+                                            <tr id="parent">
+                                                <th><span>上级部门名称</span></th>
+                                                <td>
+                                                    <div class="safe-grey">
+                                                        <input type="text" id="PDepName" name="title" lay-verify="title" autocomplete="off" disabled="disabled" class="layui-input ">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th><span>部门名称</span></th>
+                                                <td>
+                                                    <div class="safe-grey">
+                                                        <input type="text" id="DepName" name="title" lay-verify="title" autocomplete="off" placeholder="请输入部门名称" class="layui-input ">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th><span>部门编号</span></th>
+                                                <td>
+                                                    <div class="safe-grey">
+                                                        <input type="text" id="No" name="title" lay-verify="title" autocomplete="off"  placeholder="请输入部门编号"  class="layui-input ">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+
+                                    <div class="safe-tijiao">
+                                        <input type="button" value="立即提交" lay-submit lay-filter="formDemo" class="layui-btn bbl1">
+                                        <input type="button" value="添加下级部门" class="layui-btn bbl3" onclick="addChild()">
+                                        <input type="button" value="添加一级部门" class="layui-btn bg0" onclick="AddParent()">
+                                        <input type="button" value="删除" class="layui-btn bred" onclick="del()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+<script src="/Scripts/layui.js"></script>
+<script src="/Scripts/jquery-3.3.1.min.js"></script>
+<script src="/Scripts/layer/layer.js"></script>
+<script src="/Scripts/file-explore.js"></script>
+<script src="/Scripts/Common.js"></script>
+<script src="/Scripts/safe.js"></script>
+<script src="DepartmentList.js"></script>
+
+
+
